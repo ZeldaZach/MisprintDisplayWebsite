@@ -1,0 +1,49 @@
+import React from "react";
+import {Dropdown} from "react-bootstrap";
+import {DatabaseEntryKeys} from "../interfaces/databaseEntry";
+import {SortOption} from "../interfaces/SortOption";
+
+interface SortingDropdownProps {
+    sortState: SortOption;
+    sortStateUpdate: Function;
+}
+
+const SortingDropdown = ({sortState, sortStateUpdate}: SortingDropdownProps) => {
+
+    return (
+        <div style={{display: "flex", margin: "10px", flexDirection: "row", flexWrap: "wrap", alignItems: "stretch"}}>
+            <Dropdown>
+                <Dropdown.Toggle variant="success" id="dropdown-sort-key">
+                    Sort Key ({sortState.key})
+                </Dropdown.Toggle>
+                <Dropdown.Menu>
+                    {
+                        DatabaseEntryKeys.map(entry => (<Dropdown.Item onClick={() => sortStateUpdate((s: any) => ({...s, key:entry}))}>{entry}</Dropdown.Item>))
+                    }
+                </Dropdown.Menu>
+            </Dropdown>&nbsp;
+            <Dropdown>
+                <Dropdown.Toggle variant="success" id="dropdown-sort-direction">
+                    Direction ({sortState.direction})
+                </Dropdown.Toggle>
+                <Dropdown.Menu>
+                    {
+                        ["ASC","DESC"].map(entry => (<Dropdown.Item onClick={() => sortStateUpdate((s: any) => ({...s, direction:entry}))}>{entry}</Dropdown.Item>))
+                    }
+                </Dropdown.Menu>
+            </Dropdown>&nbsp;
+            <Dropdown>
+                <Dropdown.Toggle variant="success" id="dropdown-sort-image-size">
+                    Image Size ({sortState.maxImageWidth})
+                </Dropdown.Toggle>
+                <Dropdown.Menu>
+                    {
+                        ["300px", "750px", "1000px", "1500px"].map(entry => (<Dropdown.Item onClick={() => sortStateUpdate((s: any) => ({...s, maxImageWidth:entry}))}>{entry}</Dropdown.Item>))
+                    }
+                </Dropdown.Menu>
+            </Dropdown>
+        </div>
+    )
+}
+
+export default SortingDropdown;
