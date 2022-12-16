@@ -24,7 +24,7 @@
     "start": "react-scripts start",
     "build": "npm run downloadData && npm run cacheImages && react-scripts build",
     "downloadData": "curl -s -L -o src/data.json https://opensheet.elk.sh/1UVH1MARe1l6V3y_2hTAKZep7KApFCWiYMe9GN_Uc9OU/Collection",
-    "cacheImages": "src/downloadDropboxImages.py",
+    "cacheImages": "python3 src/downloadDropboxImages.py",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
