@@ -24,12 +24,13 @@ const DisplayCard = ({card, sortState}: DisplayCardProps) => {
                 <Card.Title>{cardDisplayName}</Card.Title>
                 <Card.Text>
                         Set Code: {card.SetCode}<br/>
-                        {card.Language && <>Language: {card.Language}<br/></>}
-                        Errors: {card.Errors}<br/>
+                        Error: {card.Errors}<br/>
                         UUID: {card.UUID}<br/>
+                        {card.Language && <>Language: {card.Language}<br/></>}
                         {card.Connection1 && <>Connection 1: {card.Connection1}<br/></>}
                         {card.Connection2 && <>Connection 2: {card.Connection2}<br/></>}
                         {card.Favorites && <>Favorite: {card.Favorites}<br/></>}
+                        {card.ArrivalDate && <>Arrival Date: {card.ArrivalDate}<br/></>}
                 </Card.Text>
             </Card.Body>
         </Card>

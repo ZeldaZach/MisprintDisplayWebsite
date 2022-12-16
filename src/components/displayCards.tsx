@@ -12,30 +12,23 @@ const DisplayCards = () => {
 
     useEffect(() => {
         sortedDataUpdate([...data as DatabaseEntry[]].sort((a,b) => {
+            if (a[sortState.key] === null || a[sortState.key] === undefined) {
+                a[sortState.key] = "";
+            }
+            if (b[sortState.key] === null || b[sortState.key] === undefined) {
+                b[sortState.key] = "";
+            }
+
             if (sortState.direction === "ASC") {
                 return a[sortState.key].localeCompare(b[sortState.key]);
             } else {
-                console.log(sortState);
                 return b[sortState.key].localeCompare(a[sortState.key]);
             }
         }));
     }, [sortState]);
 
-    return <div style={{display: "flex", margin: "10px", flexDirection: "row", flexWrap: "wrap", alignItems: "stretch", alignContent: "flex-start"}}>
+    return <div style={{display: "flex", justifyContent: "space-between", margin: "10px", flexDirection: "row", flexWrap: "wrap", alignItems: "stretch", alignContent: "flex-start"}}>
         {sortedData.map((entry) => <DisplayCard card={entry} sortState={sortState}></DisplayCard>)}</div>;
 };
 
 export default DisplayCards;
-
-
-/*
-
-<SORT DROP DOWN THINGY>
-
-[<Img><Card Details> ]     []         []
-[]     []          []
-
-
-
-
- */

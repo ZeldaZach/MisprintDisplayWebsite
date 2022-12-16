@@ -10,6 +10,7 @@ export interface DatabaseEntry {
     Connection1: string;
     Connection2: string;
     Favorites: string;
+    ArrivalDate: string;
 }
 
-export const DatabaseEntryKeys = ["SetCode", "PrimaryCardName", "SecondaryCardName", "Language", "Errors", "Picture", "UUID", "Connection1", "Connection2", "Favorites"];
+export const DatabaseEntryKeys = ["SetCode", "PrimaryCardName", "SecondaryCardName", "Language", "Errors", "Picture", "UUID", "Connection1", "Connection2", "Favorites", "ArrivalDate"];
