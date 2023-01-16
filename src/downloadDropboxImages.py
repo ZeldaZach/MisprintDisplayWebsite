@@ -17,7 +17,7 @@ def main():
     with data_path.open(encoding="utf-8") as data_fp:
         misprint_data = json.load(data_fp)
 
-    resource_image_dir = pathlib.Path("resources/images")
+    resource_image_dir = pathlib.Path("resources/images-large")
     resource_image_dir.mkdir(parents=True, exist_ok=True)
 
     for index, misprint_entry in enumerate(misprint_data):
