@@ -17,9 +17,10 @@ const DisplayCard = ({card, sortState}: DisplayCardProps) => {
         cardDisplayName = card.PrimaryCardName;
     }
 
+    const cardSrc = card.Picture.replace("images", `images-${sortState.maxImageWidth}`);
     return (
         <Card id={card.UUID}>
-            <Card.Img variant='top' src={card.Picture} style={{height: "auto", width:sortState.maxImageWidth, display:"block", marginLeft: "auto", marginRight: "auto"}}/>
+            <Card.Img variant='top' src={cardSrc} style={{height: "auto", width:sortState.maxImageWidth, display:"block", marginLeft: "auto", marginRight: "auto"}}/>
             <Card.Body>
                 <Card.Title>{cardDisplayName}</Card.Title>
                 <Card.Text>

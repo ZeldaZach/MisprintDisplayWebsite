@@ -5,9 +5,9 @@ import DisplayCards from "./components/displayCards";
 import {SortOption} from "./interfaces/SortOption";
 
 const defaultStart: SortOption = {
-    key: "PrimaryCardName",
-    direction: "ASC",
-    maxImageWidth: "750px"
+    key: "ArrivalDate",
+    direction: "DESC",
+    maxImageWidth: "300px"
 };
 
 export const SortContext = createContext<SortOption>(defaultStart);
