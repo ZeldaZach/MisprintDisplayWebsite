@@ -1,5 +1,5 @@
 import React from "react";
-import {Dropdown} from "react-bootstrap";
+import {Dropdown, Form} from "react-bootstrap";
 import {DatabaseEntryKeys} from "../interfaces/databaseEntry";
 import {SortOption} from "../interfaces/SortOption";
 
@@ -18,7 +18,7 @@ const SortingDropdown = ({sortState, sortStateUpdate}: SortingDropdownProps) => 
                 </Dropdown.Toggle>
                 <Dropdown.Menu>
                     {
-                        DatabaseEntryKeys.map(entry => (<Dropdown.Item onClick={() => sortStateUpdate((s: any) => ({...s, key:entry}))}>{entry}</Dropdown.Item>))
+                        DatabaseEntryKeys.map(entry => (<Dropdown.Item onClick={() => sortStateUpdate((s: SortOption) => ({...s, key:entry}))}>{entry}</Dropdown.Item>))
                     }
                 </Dropdown.Menu>
             </Dropdown>&nbsp;
@@ -28,7 +28,7 @@ const SortingDropdown = ({sortState, sortStateUpdate}: SortingDropdownProps) => 
                 </Dropdown.Toggle>
                 <Dropdown.Menu>
                     {
-                        ["ASC","DESC"].map(entry => (<Dropdown.Item onClick={() => sortStateUpdate((s: any) => ({...s, direction:entry}))}>{entry}</Dropdown.Item>))
+                        ["ASC","DESC"].map(entry => (<Dropdown.Item onClick={() => sortStateUpdate((s: SortOption) => ({...s, direction:entry}))}>{entry}</Dropdown.Item>))
                     }
                 </Dropdown.Menu>
             </Dropdown>&nbsp;
@@ -38,10 +38,17 @@ const SortingDropdown = ({sortState, sortStateUpdate}: SortingDropdownProps) => 
                 </Dropdown.Toggle>
                 <Dropdown.Menu>
                     {
-                        ["300px", "750px", "1000px", "1500px"].map(entry => (<Dropdown.Item onClick={() => sortStateUpdate((s: any) => ({...s, maxImageWidth:entry}))}>{entry}</Dropdown.Item>))
+                        ["300px", "750px", "large"].map(entry => (<Dropdown.Item onClick={() => sortStateUpdate((s: SortOption) => ({...s, maxImageWidth:entry}))}>{entry}</Dropdown.Item>))
                     }
                 </Dropdown.Menu>
-            </Dropdown>
+            </Dropdown>&nbsp;
+            <Form.Control className="w-50" as="input" placeholder="Search" onChange={
+                (entry: React.ChangeEvent<HTMLInputElement>) => {
+                    sortStateUpdate(() => {
+                        return {...sortState, filterString: entry.target.value}
+                    })
+                }
+            }/>
         </div>
     )
 }
