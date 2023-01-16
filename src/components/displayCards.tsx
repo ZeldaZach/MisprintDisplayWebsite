@@ -46,7 +46,7 @@ const shouldFilter = (card: DatabaseEntry, filter?: string): boolean => {
 const matchingFieldFound = (card: DatabaseEntry, filter: string): boolean => {
     let matchFound = false;
     Object.values(card).forEach((cardFieldValue: string) => {
-        if (cardFieldValue.includes(filter)) {
+        if (cardFieldValue.toLowerCase().includes(filter)) {
             matchFound = true;
             return;
         }

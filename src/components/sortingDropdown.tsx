@@ -45,7 +45,7 @@ const SortingDropdown = ({sortState, sortStateUpdate}: SortingDropdownProps) => 
             <Form.Control className="w-50" as="input" placeholder="Search" onChange={
                 (entry: React.ChangeEvent<HTMLInputElement>) => {
                     sortStateUpdate(() => {
-                        return {...sortState, filterString: entry.target.value}
+                        return {...sortState, filterString: entry.target.value.toLowerCase()}
                     })
                 }
             }/>
