@@ -18,6 +18,19 @@ const DisplayCards = () => {
             if (b[sortState.key] === null || b[sortState.key] === undefined) {
                 b[sortState.key] = "";
             }
+            if (sortState.key === "ArrivalDate") {
+                if (a[sortState.key] === "") {
+                    a[sortState.key] = parseDate("1/1/1970");
+                } else {
+                    a[sortState.key] = parseDate(a[sortState.key]);
+                }
+
+                if (b[sortState.key] === "") {
+                    b[sortState.key] = parseDate("1/1/1970");
+                } else {
+                    b[sortState.key] = parseDate(b[sortState.key]);
+                }
+            }
 
             if (sortState.direction === "ASC") {
                 return a[sortState.key].localeCompare(b[sortState.key]);
@@ -35,6 +48,10 @@ const DisplayCards = () => {
         }
         </div>;
 };
+
+const parseDate = (date: string): string => {
+    return new Date(date).toISOString().split('T')[0];
+}
 
 const shouldFilter = (card: DatabaseEntry, filter?: string): boolean => {
     if (!filter) {
