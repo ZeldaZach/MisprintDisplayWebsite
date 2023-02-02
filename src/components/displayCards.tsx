@@ -43,6 +43,7 @@ const DisplayCards = () => {
     return <div style={{display: "flex", justifyContent: "space-between", margin: "10px", flexDirection: "row", flexWrap: "wrap", alignItems: "stretch", alignContent: "flex-start"}}>
         {
             sortedData
+                .filter((entry) => {return entry.Picture})
                 .filter((entry) => {return shouldFilter(entry, sortState.filterString)})
                 .map((entry) => <DisplayCard card={entry} sortState={sortState}></DisplayCard>)
         }
