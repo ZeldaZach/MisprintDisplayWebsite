@@ -1,0 +1,31 @@
+.toggle {
+    width: 44px;
+    height: 44px;
+    border-radius: var(--radius-full);
+    background: var(--surface-raised);
+    border: 1px solid var(--border-default);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all var(--transition-base);
+}
+
+.toggle:hover {
+    background: var(--surface-overlay);
+    transform: scale(1.05);
+}
+
+.toggle:focus-visible {
+    outline: 2px solid var(--border-focus);
+    outline-offset: 2px;
+}
+
+.icon {
+    font-size: 1.25rem;
+    transition: transform var(--transition-slow);
+}
+
+.toggle:hover .icon {
+    transform: rotate(20deg);
+}

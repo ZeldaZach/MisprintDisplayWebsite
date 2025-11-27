@@ -25,3 +25,19 @@ yarn-error.log*
 .idea/
 data.json
 resources/images*/
+public/resources/
+
+# Python virtual environment
+venv/
+*.pyc
+__pycache__/
+
+# Log files
+*.log
+download_log.txt
+live_data.json
+
+# Documentation (from previous work, not relevant to these fixes)
+CODEBASE_REVIEW.md
+IMPLEMENTATION_SUMMARY.md
+docs/
