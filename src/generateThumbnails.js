@@ -5,8 +5,8 @@ const path = require('path');
 const sharp = require('sharp');
 
 const sizes = [
-    { width: 300, dir: 'resources/images-300px', quality: 82 },
-    { width: 750, dir: 'resources/images-750px', quality: 85 }
+    { width: 300, dir: 'resources/images-300px', quality: 100 },
+    { width: 750, dir: 'resources/images-750px', quality: 100 }
 ];
 
 async function generateThumbnails() {

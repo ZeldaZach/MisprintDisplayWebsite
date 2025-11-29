@@ -22,14 +22,20 @@ export function getLocalImagePath(url: string, size: '300px' | '750px' | 'large'
     const urlParts = url.split('.');
     const extension = urlParts[urlParts.length - 1].split('?')[0]; // Get extension before query params
 
+    const urlNoHeader = url.split('/');
+
     // Slugify the URL (convert to lowercase, replace all special chars with hyphens)
     // This matches Python's slugify library behavior
-    const slugified = url
+    const slugified = urlNoHeader[urlNoHeader.length - 1]
         .toLowerCase()
         .replace(/[^a-z0-9]+/g, '-')  // Replace ALL non-alphanumeric with hyphens (including dots)
         .replace(/^-+|-+$/g, '');      // Remove leading/trailing hyphens
 
-    return `resources/images-${size}/${slugified}.${extension}`;
+    const [beginning, ...middle] = slugified.split("-");
+    const last = middle.pop();
+
+    console.log("ZZ", `resources/images-${size}/${beginning}-${middle.join('-')}.${last}`);
+    return `resources/images-${size}/${beginning}-${middle.join('-')}.${last}`;
 }
 
 /**
