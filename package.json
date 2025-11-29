@@ -27,7 +27,7 @@
     "build": "npm run downloadData && npm run cacheImages && npm run generateThumbnails && npm run build:site",
     "build:site": "react-scripts build",
     "downloadData": "curl -s -L -o src/data/data.json https://opensheet.elk.sh/1UVH1MARe1l6V3y_2hTAKZep7KApFCWiYMe9GN_Uc9OU/Collection",
-    "cacheImages": "python src/downloadDropboxImages.py",
+    "cacheImages": "python3 src/downloadDropboxImages.py",
     "generateThumbnails": "node src/generateThumbnails.js",
     "test": "vitest",
     "eject": "react-scripts eject",

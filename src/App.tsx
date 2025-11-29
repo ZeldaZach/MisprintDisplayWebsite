@@ -1,7 +1,7 @@
 import './styles/design-system.css';
 import './styles/utilities.css';
 import SortingDropdown from "./components/SortingDropdown";
-import DisplayCards from "./components/DisplayCards";
+import DisplayCards from "./components/displayCards";
 import ImageViewer from "./components/ImageViewer";
 import {ThemeProvider} from './contexts/ThemeContext';
 import {ImageViewerProvider} from './contexts/ImageViewerContext';

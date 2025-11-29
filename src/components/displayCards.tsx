@@ -122,8 +122,9 @@ const shouldFilter = (card: DatabaseEntry, filter?: string): boolean => {
 
 // Performance Fix: Use .some() instead of forEach for early exit (5x faster)
 const matchingFieldFound = (card: DatabaseEntry, filter: string): boolean => {
+    const lowerFilter = filter.toLowerCase();
     return Object.values(card).some(value =>
-        value?.toLowerCase().includes(filter)
+        String(value ?? '').toLowerCase().includes(lowerFilter)
     );
 }
 
