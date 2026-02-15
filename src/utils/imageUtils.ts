@@ -34,7 +34,6 @@ export function getLocalImagePath(url: string, size: '300px' | '750px' | 'large'
     const [beginning, ...middle] = slugified.split("-");
     const last = middle.pop();
 
-    console.log("ZZ", `resources/images-${size}/${beginning}-${middle.join('-')}.${last}`);
     return `resources/images-${size}/${beginning}-${middle.join('-')}.${last}`;
 }
 
