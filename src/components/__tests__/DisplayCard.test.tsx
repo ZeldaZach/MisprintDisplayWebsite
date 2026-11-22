@@ -21,7 +21,7 @@ describe('DisplayCard', () => {
     SecondaryCardName: '',
     SetCode: 'LEA',
     Errors: 'Miscut',
-    Picture: 'images-large/test.jpg',
+    Picture: 'resources/images-large/https-www-dropbox-com-s-abc123-test-jpeg-dl-1.jpeg',
     Language: 'English',
     ArrivalDate: '2023-01-15',
   };
@@ -83,7 +83,7 @@ describe('DisplayCard', () => {
       render(<DisplayCard card={mockCard} sortState={mockSortState} />);
 
       const img = screen.getByAltText('Black Lotus') as HTMLImageElement;
-      expect(img.src).toContain('images-large/test.jpg');
+      expect(img.src).toContain('resources/images-large/https-www-dropbox-com-s-abc123-test-jpeg-dl-1.jpeg');
     });
 
     it('should transform image src for different sizes', () => {
@@ -95,7 +95,7 @@ describe('DisplayCard', () => {
       const { rerender } = render(<DisplayCard card={mockCard} sortState={sortState300} />);
 
       let img = screen.getByAltText('Black Lotus') as HTMLImageElement;
-      expect(img.src).toContain('images-300px/test.jpg');
+      expect(img.src).toContain('resources/images-300px/https-www-dropbox-com-s-abc123-test-jpeg-dl-1.webp');
 
       const sortState750: SortOption = {
         ...mockSortState,
@@ -105,7 +105,7 @@ describe('DisplayCard', () => {
       rerender(<DisplayCard card={mockCard} sortState={sortState750} />);
 
       img = screen.getByAltText('Black Lotus') as HTMLImageElement;
-      expect(img.src).toContain('images-750px/test.jpg');
+      expect(img.src).toContain('resources/images-750px/https-www-dropbox-com-s-abc123-test-jpeg-dl-1.webp');
     });
   });
 
@@ -125,7 +125,7 @@ describe('DisplayCard', () => {
       fireEvent.click(img);
 
       expect(onImageClick).toHaveBeenCalledWith(
-        'images-large/test.jpg',
+        'resources/images-large/https-www-dropbox-com-s-abc123-test-jpeg-dl-1.jpeg',
         'Black Lotus'
       );
     });
@@ -145,7 +145,7 @@ describe('DisplayCard', () => {
       fireEvent.keyDown(img, { key: 'Enter' });
 
       expect(onImageClick).toHaveBeenCalledWith(
-        'images-large/test.jpg',
+        'resources/images-large/https-www-dropbox-com-s-abc123-test-jpeg-dl-1.jpeg',
         'Black Lotus'
       );
     });
@@ -165,7 +165,7 @@ describe('DisplayCard', () => {
       fireEvent.keyDown(img, { key: ' ' });
 
       expect(onImageClick).toHaveBeenCalledWith(
-        'images-large/test.jpg',
+        'resources/images-large/https-www-dropbox-com-s-abc123-test-jpeg-dl-1.jpeg',
         'Black Lotus'
       );
     });

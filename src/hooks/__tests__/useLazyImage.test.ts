@@ -23,10 +23,10 @@ describe('useLazyImage', () => {
       };
     });
 
-    global.IntersectionObserver = mockIntersectionObserver as any;
+    globalThis.IntersectionObserver = mockIntersectionObserver as any;
 
     // Mock Image constructor
-    global.Image = class {
+    globalThis.Image = class {
       onload: (() => void) | null = null;
       onerror: (() => void) | null = null;
       src = '';
@@ -62,7 +62,7 @@ describe('useLazyImage', () => {
       thresholds: [],
     }));
 
-    global.IntersectionObserver = mockIntersectionObserver as any;
+    globalThis.IntersectionObserver = mockIntersectionObserver as any;
 
     const { result } = renderHook(() => useLazyImage('test.jpg'));
 

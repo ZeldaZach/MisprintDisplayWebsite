@@ -15,7 +15,7 @@ describe('SortContext', () => {
       expect(result.current.sortState).toEqual({
         key: 'ArrivalDate',
         direction: 'DESC',
-        maxImageWidth: 'large',
+        maxImageWidth: '300px',
       });
     });
 
@@ -49,7 +49,7 @@ describe('SortContext', () => {
 
       expect(result.current.sortState.direction).toBe('ASC');
       expect(result.current.sortState.key).toBe('ArrivalDate');
-      expect(result.current.sortState.maxImageWidth).toBe('large');
+      expect(result.current.sortState.maxImageWidth).toBe('300px');
     });
 
     it('should update multiple fields independently', () => {
