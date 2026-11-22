@@ -6,6 +6,9 @@ import {useLazyImage} from '../hooks/useLazyImage';
 import {getLocalImagePath, getWebPPath} from '../utils/imageUtils';
 import styles from './DisplayCard.module.css';
 
+// v2: landscape thumbnails remade at double width (Nov 2026)
+const THUMBNAIL_VERSION = 2;
+
 /**
  * Props for the DisplayCard component
  */
@@ -54,9 +57,11 @@ const DisplayCard = memo(({card, sortState, onImageClick}: DisplayCardProps) => 
     }
 
     // Thumbnails are webp; the "large" view uses the original file.
+    // Bump THUMBNAIL_VERSION when existing thumbnails are regenerated, so
+    // browsers and the service worker's image cache fetch the new files.
     const cardSrc = sortState.maxImageWidth === 'large'
         ? getLocalImagePath(card.Picture, 'large')
-        : getWebPPath(getLocalImagePath(card.Picture, sortState.maxImageWidth));
+        : `${getWebPPath(getLocalImagePath(card.Picture, sortState.maxImageWidth))}?v=${THUMBNAIL_VERSION}`;
     const largeSrc = getLocalImagePath(card.Picture, 'large'); // Always use large for fullscreen
 
     // Lazy loading hook

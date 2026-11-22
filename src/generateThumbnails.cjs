@@ -14,6 +14,18 @@ const sizes = [
     { width: 750, dir: 'resources/images-750px', quality: 80 },
 ];
 
+// Landscape images get a card two grid columns wide (see .cardWide in
+// DisplayCard.module.css and the 1.2 cutoff in DisplayCard.tsx), so their
+// thumbnails are made twice as wide to stay as sharp as the others.
+const WIDE_ASPECT_RATIO = 1.2;
+
+async function isWide(inputPath) {
+    const { width, height, orientation } = await sharp(inputPath).metadata();
+    // EXIF orientations 5-8 are rotated 90 degrees, so width and height swap.
+    const [w, h] = orientation >= 5 ? [height, width] : [width, height];
+    return w / h > WIDE_ASPECT_RATIO;
+}
+
 async function generateThumbnails() {
     const largeDir = 'resources/images-large';
 
@@ -45,9 +57,10 @@ async function generateThumbnails() {
             }
 
             try {
+                const width = (await isWide(inputPath)) ? size.width * 2 : size.width;
                 await sharp(inputPath)
                     .rotate() // apply EXIF orientation before metadata is dropped
-                    .resize(size.width, null, { fit: 'inside', withoutEnlargement: true })
+                    .resize(width, null, { fit: 'inside', withoutEnlargement: true })
                     .webp({ quality: size.quality })
                     .toFile(outputPath);
                 processed++;
