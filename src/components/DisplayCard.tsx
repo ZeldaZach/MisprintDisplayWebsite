@@ -3,7 +3,7 @@ import React from "react";
 import {DatabaseEntry} from "../types/databaseEntry";
 import {SortOption} from "../types/SortOption";
 import {useLazyImage} from '../hooks/useLazyImage';
-import {getLocalImagePath} from '../utils/imageUtils';
+import {getLocalImagePath, getWebPPath} from '../utils/imageUtils';
 import styles from './DisplayCard.module.css';
 
 /**
@@ -53,7 +53,10 @@ const DisplayCard = memo(({card, sortState, onImageClick}: DisplayCardProps) => 
         cardDisplayName = card.PrimaryCardName;
     }
 
-    const cardSrc = getLocalImagePath(card.Picture, sortState.maxImageWidth);
+    // Thumbnails are webp; the "large" view uses the original file.
+    const cardSrc = sortState.maxImageWidth === 'large'
+        ? getLocalImagePath(card.Picture, 'large')
+        : getWebPPath(getLocalImagePath(card.Picture, sortState.maxImageWidth));
     const largeSrc = getLocalImagePath(card.Picture, 'large'); // Always use large for fullscreen
 
     // Lazy loading hook

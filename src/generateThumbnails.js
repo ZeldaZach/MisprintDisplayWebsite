@@ -1,12 +1,17 @@
 #!/usr/bin/env node
 
+// Makes a webp thumbnail of every image in resources/images-large for each
+// size below, skipping any thumbnail that already exists. The site's 300px
+// and 750px views load these; the "large" view loads the original file.
+
 const fs = require('fs');
 const path = require('path');
 const sharp = require('sharp');
 
+// The 300px view is rendered 450px wide so it stays sharp on high-DPI screens.
 const sizes = [
-    { width: 450, dir: 'resources/images-300px', quality: 85 },
-   // { width: 750, dir: 'resources/images-750px', quality: 100 }
+    { width: 450, dir: 'resources/images-300px', quality: 80 },
+    { width: 750, dir: 'resources/images-750px', quality: 80 },
 ];
 
 async function generateThumbnails() {
@@ -17,86 +22,46 @@ async function generateThumbnails() {
         process.exit(1);
     }
 
-    // Create thumbnail directories
     for (const size of sizes) {
-        if (!fs.existsSync(size.dir)) {
-            fs.mkdirSync(size.dir, { recursive: true });
-        }
+        fs.mkdirSync(size.dir, { recursive: true });
     }
 
-    const files = fs.readdirSync(largeDir);
-    const imageFiles = files.filter(file => /\.(jpg|jpeg|png|webp)$/i.test(file));
-
+    const imageFiles = fs.readdirSync(largeDir).filter(file => /\.(jpg|jpeg|png|webp)$/i.test(file));
     console.log(`Found ${imageFiles.length} images to process`);
 
     let processed = 0;
     let skipped = 0;
+    let failed = 0;
 
     for (const file of imageFiles) {
         const inputPath = path.join(largeDir, file);
 
         for (const size of sizes) {
-            const outputPath = path.join(size.dir, file);
-            const webpOutputPath = outputPath.replace(/\.(jpg|jpeg|png)$/i, '.webp');
+            const outputPath = path.join(size.dir, file.replace(/\.[^.]+$/, '.webp'));
 
-            // Skip if both JPEG and WebP thumbnails already exist
-            if (fs.existsSync(outputPath) && fs.existsSync(webpOutputPath)) {
-                skipped += 2;
+            if (fs.existsSync(outputPath)) {
+                skipped++;
                 continue;
             }
 
             try {
-                // Generate JPEG thumbnail
-                if (!fs.existsSync(outputPath)) {
-                    await sharp(inputPath)
-                        .resize(size.width, null, {
-                            width: size.width,
-                            fit: 'inside',
-                            withoutEnlargement: true
-                        })
-                        .jpeg({
-                            quality: size.quality,
-                            progressive: true,
-                            mozjpeg: true
-                        })
-                        .toFile(outputPath);
-                    processed++;
-                } else {
-                    skipped++;
-                }
-
-                // Generate WebP thumbnail
-                if (!fs.existsSync(webpOutputPath)) {
-                    await sharp(inputPath)
-                        .resize(size.width, null, {
-                            width: size.width,
-                            fit: 'inside',
-                            withoutEnlargement: true
-                        })
-                        .webp({
-                            quality: size.quality,
-                        })
-                        .toFile(webpOutputPath);
-                    processed++;
-                } else {
-                    skipped++;
-                }
-
-                if (processed % 50 === 0) {
+                await sharp(inputPath)
+                    .rotate() // apply EXIF orientation before metadata is dropped
+                    .resize(size.width, null, { fit: 'inside', withoutEnlargement: true })
+                    .webp({ quality: size.quality })
+                    .toFile(outputPath);
+                processed++;
+                if (processed % 100 === 0) {
                     console.log(`Processed ${processed} thumbnails...`);
                 }
             } catch (err) {
+                failed++;
                 console.error(`Error processing ${file} at ${size.width}px:`, err.message);
             }
         }
     }
 
-    console.log(`\nComplete! Processed: ${processed}, Skipped: ${skipped}`);
-    console.log(`Generated thumbnails in:`);
-    for (const size of sizes) {
-        const count = fs.readdirSync(size.dir).length;
-        console.log(`  - ${size.dir}: ${count} files`);
-    }
+    console.log(`\nComplete! Processed: ${processed}, Skipped: ${skipped}, Failed: ${failed}`);
 }
 
 generateThumbnails().catch(err => {
